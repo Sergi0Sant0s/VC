@@ -40,10 +40,10 @@ int main(void)
     aux = vc_binary_blob_labelling(gray_result1, gray_result2, &nAux);
     
     //printf("FECHOU\n");
-    //printf("Valor: %d", *nAux);
+    printf("Valor: %d", nAux);
     //getchar();
     
-    save_run("teste.pgm", teste);
+    //save_run("teste.pgm", teste);
     
     vc_image_free(image);
     vc_image_free(gray_result);
