@@ -162,7 +162,11 @@ int vc_rgb_histogram_show(IVC *original, IVC *converted);
 
 #pragma endregion
 
+#pragma region Testes
 
+vc_teste(IVC *original, IVC *converted);
+
+#pragma endregion
 
 
 

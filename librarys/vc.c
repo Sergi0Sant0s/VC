@@ -403,7 +403,8 @@ char *conc(const char *first, char *second){
 }
 
 void execute(char *filepath){
-    int status;
+    pid_t  pid;
+    pid = fork();
     
     char *array[5];
     //
@@ -413,7 +414,16 @@ void execute(char *filepath){
     array[3] = filepath;
     array[4] = NULL;
     //
+    if (pid == -1){ 
+  
+      // pid == -1 means error occured 
+      printf("can't fork, error occured\n"); 
+      exit(EXIT_FAILURE); 
+   } 
+   else if (pid == 0){ 
     execvp(array[0], array);
+    exit(0);
+   }
 }
 
 void save(char *filename, IVC * image){
@@ -1725,4 +1735,31 @@ int vc_rgb_histogram_equalization(IVC *original, IVC *converted){
 		}
 	return 1;
 }
+#pragma endregion
+
+#pragma region Testes
+
+vc_teste(IVC *original, IVC *converted){
+	int pos,x,y;
+	int max = 210;
+	
+	for (x = 0; x < original->width; x++)
+			for (y = 0; y < original->height; y++)
+			{
+				pos = y * original->bytesperline + x * original->channels;
+				if(original->data[pos] > max && original->data[pos + 1] > max && original->data[pos + 2] > max){
+					converted->data[pos] = original->data[pos];
+					converted->data[pos + 1] = original->data[pos + 1];
+					converted->data[pos + 2] = original->data[pos + 2];
+				}
+				else
+				{
+					converted->data[pos] = 0;
+					converted->data[pos + 1] = 0;
+					converted->data[pos + 2] = 0;
+				}
+				
+			}
+}
+
 #pragma endregion
