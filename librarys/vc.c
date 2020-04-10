@@ -1739,9 +1739,9 @@ int vc_rgb_histogram_equalization(IVC *original, IVC *converted){
 
 #pragma region Testes
 
-vc_teste(IVC *original, IVC *converted){
+void vc_teste(IVC *original, IVC *converted){
 	int pos,x,y;
-	int max = 210;
+	int max = 200, min = 30;
 	
 	for (x = 0; x < original->width; x++)
 			for (y = 0; y < original->height; y++)
@@ -1752,11 +1752,10 @@ vc_teste(IVC *original, IVC *converted){
 					converted->data[pos + 1] = original->data[pos + 1];
 					converted->data[pos + 2] = original->data[pos + 2];
 				}
-				else
-				{
-					converted->data[pos] = 0;
-					converted->data[pos + 1] = 0;
-					converted->data[pos + 2] = 0;
+				else if(original->data[pos] < min && original->data[pos + 1] < min && original->data[pos + 2] < min){
+					converted->data[pos] = original->data[pos];
+					converted->data[pos + 1] = original->data[pos + 1];
+					converted->data[pos + 2] = original->data[pos + 2];
 				}
 				
 			}
